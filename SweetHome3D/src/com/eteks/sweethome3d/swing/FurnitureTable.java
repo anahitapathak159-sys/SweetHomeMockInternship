@@ -915,6 +915,9 @@ public class FurnitureTable extends JTable implements View, Printable {
           case WIDTH :
             writer.write(sizeFormat.format(copiedPiece.getWidth()));
             break;
+          case VOLUME :
+            writer.write(sizeFormat.format(copiedPiece.getVolume()));
+            break;
           case DEPTH :
             writer.write(sizeFormat.format(copiedPiece.getDepth()));
             break;
@@ -1126,6 +1129,8 @@ public class FurnitureTable extends JTable implements View, Printable {
           return preferences.getLocalizedString(FurnitureTable.class, "nameColumn");
         case WIDTH :
           return preferences.getLocalizedString(FurnitureTable.class, "widthColumn");
+        case VOLUME :
+          return preferences.getLocalizedString(FurnitureTable.class, "volumeColumn");
         case DEPTH :
           return preferences.getLocalizedString(FurnitureTable.class, "depthColumn");
         case HEIGHT : 
@@ -1170,10 +1175,11 @@ public class FurnitureTable extends JTable implements View, Printable {
       switch (property) {
         case CATALOG_ID :
         case NAME :
-          return 120; 
+          return 120;
         case WIDTH :
+        case VOLUME:
         case DEPTH :
-        case HEIGHT : 
+        case HEIGHT :
         case X : 
         case Y :
         case ELEVATION : 
@@ -1211,6 +1217,8 @@ public class FurnitureTable extends JTable implements View, Printable {
           return getNameWithIconRenderer(); 
         case WIDTH :
           return getSizeRenderer(HomePieceOfFurniture.SortableProperty.WIDTH, preferences);
+        case VOLUME :
+          return getSizeRenderer(HomePieceOfFurniture.SortableProperty.VOLUME, preferences);
         case DEPTH :
           return getSizeRenderer(HomePieceOfFurniture.SortableProperty.DEPTH, preferences);
         case HEIGHT : 
@@ -1321,6 +1329,15 @@ public class FurnitureTable extends JTable implements View, Printable {
                     isSelected, hasFocus, row, column);
               }
             };
+        case VOLUME :
+          return new SizeRenderer() {
+            public Component getTableCellRendererComponent(JTable table,
+                                                           Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+              return super.getTableCellRendererComponent(table,
+                      value != null  ? ((HomePieceOfFurniture)value).getVolume()  : null,
+                      isSelected, hasFocus, row, column);
+            }
+          };
         case DEPTH :
           return new SizeRenderer() {
               @Override
